@@ -1,340 +1,240 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'app_colors.dart';
 
-/// WorkBridge Application Theme
-/// Implements the Corporate/Modern Minimalist aesthetic from Design.md:
-/// - 4px/8px modular spacing rhythm
-/// - 16px radius for Level 1 cards
-/// - 12px radius for 48px touch-ergonomic buttons and form fields
-/// - Pill (stadium) contours for status chips and attribute badges
-/// - Full Inter typographic scale with tabular figures and negative tracking
+import 'app_colors.dart';
+import 'theme_extension.dart';
+
 class AppTheme {
-  static ThemeData get lightTheme {
+  AppTheme._();
+
+  static final ThemeData lightTheme = _buildTheme(brightness: Brightness.light, scheme: _lightScheme, palette: WorkBridgeThemeExtension.light);
+
+  static final ThemeData darkTheme = _buildTheme(brightness: Brightness.dark, scheme: _darkScheme, palette: WorkBridgeThemeExtension.dark);
+
+  static const ColorScheme _lightScheme = ColorScheme.light(
+    primary: AppColors.primary,
+    onPrimary: Colors.white,
+    primaryContainer: AppColors.lightPrimaryContainer,
+    onPrimaryContainer: AppColors.lightOnPrimaryContainer,
+    secondary: Color(0xFF0D9488),
+    onSecondary: Colors.white,
+    secondaryContainer: Color(0xFFCCFBF1),
+    onSecondaryContainer: Color(0xFF115E59),
+    tertiary: AppColors.success,
+    onTertiary: Colors.white,
+    tertiaryContainer: Color(0xFFD1FAE5),
+    onTertiaryContainer: Color(0xFF065F46),
+    error: Color(0xFFBA1A1A),
+    onError: Colors.white,
+    errorContainer: Color(0xFFFFDAD6),
+    onErrorContainer: Color(0xFF93000A),
+    surface: AppColors.lightSurface,
+    onSurface: AppColors.lightTextPrimary,
+    onSurfaceVariant: AppColors.lightTextSecondary,
+    outline: Color(0xFF64748B),
+    outlineVariant: AppColors.lightBorder,
+    surfaceContainerLowest: Color(0xFFFFFFFF),
+    surfaceContainerLow: Color(0xFFF8FAFC),
+    surfaceContainer: Color(0xFFF1F5F9),
+    surfaceContainerHigh: Color(0xFFF1F5F9),
+    surfaceContainerHighest: Color(0xFFE2E8F0),
+  );
+
+  static const ColorScheme _darkScheme = ColorScheme.dark(
+    primary: Color(0xFF3B82F6),
+    onPrimary: Color(0xFFFFFFFF),
+    primaryContainer: Color(0xFF1E3A8A),
+    onPrimaryContainer: Color(0xFFDBEAFE),
+    secondary: Color(0xFF2DD4BF),
+    onSecondary: Color(0xFF042F2E),
+    secondaryContainer: Color(0xFF134E4A),
+    onSecondaryContainer: Color(0xFFCCFBF1),
+    tertiary: Color(0xFF34D399),
+    onTertiary: Color(0xFF052E16),
+    tertiaryContainer: Color(0xFF065F46),
+    onTertiaryContainer: Color(0xFFD1FAE5),
+    error: Color(0xFFF87171),
+    onError: Color(0xFF450A0A),
+    errorContainer: Color(0xFF7F1D1D),
+    onErrorContainer: Color(0xFFFEE2E2),
+    surface: AppColors.darkSurface,
+    onSurface: AppColors.darkTextPrimary,
+    onSurfaceVariant: AppColors.darkTextSecondary,
+    outline: Color(0xFF94A3B8),
+    outlineVariant: AppColors.darkBorder,
+    surfaceContainerLowest: Color(0xFF0B0F19),
+    surfaceContainerLow: Color(0xFF111827),
+    surfaceContainer: Color(0xFF161F30),
+    surfaceContainerHigh: Color(0xFF1F2B42),
+    surfaceContainerHighest: Color(0xFF26354D),
+  );
+
+  static ThemeData _buildTheme({required Brightness brightness, required ColorScheme scheme, required WorkBridgeThemeExtension palette}) {
+    final isDark = brightness == Brightness.dark;
+
+    final textPrimary = scheme.onSurface;
+    final textSecondary = scheme.onSurfaceVariant;
+    final borderColor = scheme.outlineVariant;
+    final surfaceColor = scheme.surface;
+
+    OutlineInputBorder inputBorder(Color color, {double width = 1}) {
+      return OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(color: color, width: width),
+      );
+    }
+
     return ThemeData(
       useMaterial3: true,
+      brightness: brightness,
       fontFamily: 'Inter',
-      scaffoldBackgroundColor: AppColors.background,
+      colorScheme: scheme,
+      scaffoldBackgroundColor: isDark ? AppColors.darkBackground : AppColors.lightBackground,
       primaryColor: AppColors.primary,
+      extensions: <ThemeExtension<dynamic>>[palette],
 
-      // -----------------------------------------------------------------------
-      // ColorScheme (Material 3 with Design.md exact mappings)
-      // -----------------------------------------------------------------------
-      colorScheme: const ColorScheme.light(
-        primary: AppColors.primary,
-        onPrimary: AppColors.onPrimary,
-        primaryContainer: AppColors.primaryContainer,
-        onPrimaryContainer: AppColors.onPrimaryContainer,
-        secondary: AppColors.secondary,
-        onSecondary: AppColors.onSecondary,
-        secondaryContainer: AppColors.secondaryContainer,
-        onSecondaryContainer: AppColors.onSecondaryContainer,
-        tertiary: AppColors.tertiary,
-        onTertiary: AppColors.onTertiary,
-        tertiaryContainer: AppColors.tertiaryContainer,
-        onTertiaryContainer: AppColors.onTertiaryContainer,
-        error: AppColors.error,
-        onError: AppColors.onError,
-        errorContainer: AppColors.errorContainer,
-        onErrorContainer: AppColors.onErrorContainer,
-        surface: AppColors.surfaceCard,
-        onSurface: AppColors.textPrimary,
-        onSurfaceVariant: AppColors.textSecondary,
-        outline: AppColors.outline,
-        outlineVariant: AppColors.border,
-        surfaceContainerLowest: AppColors.surfaceContainerLowest,
-        surfaceContainerLow: AppColors.surfaceContainerLow,
-        surfaceContainer: AppColors.surfaceContainer,
-        surfaceContainerHigh: AppColors.surfaceContainerHigh,
-        surfaceContainerHighest: AppColors.surfaceContainerHighest,
+      textTheme: TextTheme(
+        headlineLarge: TextStyle(fontFamily: 'Inter', fontSize: 28, fontWeight: FontWeight.w700, height: 36 / 28, letterSpacing: -0.56, color: textPrimary),
+        headlineMedium: TextStyle(fontFamily: 'Inter', fontSize: 22, fontWeight: FontWeight.w700, height: 28 / 22, letterSpacing: -0.33, color: textPrimary),
+        headlineSmall: TextStyle(fontFamily: 'Inter', fontSize: 20, fontWeight: FontWeight.w700, height: 26 / 20, letterSpacing: -0.20, color: textPrimary),
+        titleLarge: TextStyle(fontFamily: 'Inter', fontSize: 18, fontWeight: FontWeight.w700, color: textPrimary),
+        titleMedium: TextStyle(fontFamily: 'Inter', fontSize: 16, fontWeight: FontWeight.w600, height: 22 / 16, letterSpacing: -0.16, color: textPrimary),
+        titleSmall: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w600, height: 20 / 14, color: textPrimary),
+        bodyLarge: TextStyle(fontFamily: 'Inter', fontSize: 15, fontWeight: FontWeight.w400, height: 22 / 15, color: textPrimary),
+        bodyMedium: TextStyle(fontFamily: 'Inter', fontSize: 13, fontWeight: FontWeight.w400, height: 18 / 13, color: textSecondary),
+        bodySmall: TextStyle(fontFamily: 'Inter', fontSize: 12, fontWeight: FontWeight.w400, height: 16 / 12, color: textSecondary),
+        labelLarge: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w600, height: 18 / 14, color: textPrimary),
+        labelMedium: TextStyle(fontFamily: 'Inter', fontSize: 12, fontWeight: FontWeight.w500, height: 16 / 12, color: textSecondary),
+        labelSmall: TextStyle(fontFamily: 'Inter', fontSize: 11, fontWeight: FontWeight.w500, height: 14 / 11, color: textSecondary),
       ),
 
-      // -----------------------------------------------------------------------
-      // Typography Scale (Inter with precise font sizes, heights & tracking)
-      // -----------------------------------------------------------------------
-      textTheme: const TextTheme(
-        // headline-xl: 28px / 36px / bold / -0.02em (-0.56px)
-        headlineLarge: TextStyle(
-          fontFamily: 'Inter',
-          fontSize: 28,
-          fontWeight: FontWeight.w700,
-          height: 36 / 28,
-          letterSpacing: -0.56,
-          color: AppColors.textPrimary,
-        ),
-        // headline-lg: 22px / 28px / bold / -0.015em (-0.33px)
-        headlineMedium: TextStyle(
-          fontFamily: 'Inter',
-          fontSize: 22,
-          fontWeight: FontWeight.w700,
-          height: 28 / 22,
-          letterSpacing: -0.33,
-          color: AppColors.textPrimary,
-        ),
-        // headline-lg-mobile: 20px / 26px / bold / -0.01em (-0.2px)
-        headlineSmall: TextStyle(
-          fontFamily: 'Inter',
-          fontSize: 20,
-          fontWeight: FontWeight.w700,
-          height: 26 / 20,
-          letterSpacing: -0.20,
-          color: AppColors.textPrimary,
-        ),
-        // title-md: 16px / 22px / semibold / -0.01em (-0.16px)
-        titleMedium: TextStyle(
-          fontFamily: 'Inter',
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-          height: 22 / 16,
-          letterSpacing: -0.16,
-          color: AppColors.textPrimary,
-        ),
-        // title-sm: 14px / 20px / semibold
-        titleSmall: TextStyle(
-          fontFamily: 'Inter',
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-          height: 20 / 14,
-          color: AppColors.textPrimary,
-        ),
-        // body-lg: 15px / 22px / regular
-        bodyLarge: TextStyle(
-          fontFamily: 'Inter',
-          fontSize: 15,
-          fontWeight: FontWeight.w400,
-          height: 22 / 15,
-          color: AppColors.textPrimary,
-        ),
-        // body-md: 13px / 18px / regular
-        bodyMedium: TextStyle(
-          fontFamily: 'Inter',
-          fontSize: 13,
-          fontWeight: FontWeight.w400,
-          height: 18 / 13,
-          color: AppColors.textSecondary,
-        ),
-        // body-sm: 12px / 16px / regular
-        bodySmall: TextStyle(
-          fontFamily: 'Inter',
-          fontSize: 12,
-          fontWeight: FontWeight.w400,
-          height: 16 / 12,
-          color: AppColors.textSecondary,
-        ),
-        // label-lg: 14px / 18px / semibold
-        labelLarge: TextStyle(
-          fontFamily: 'Inter',
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
-          height: 18 / 14,
-          color: AppColors.textPrimary,
-        ),
-        // label-md: 12px / 16px / medium
-        labelMedium: TextStyle(
-          fontFamily: 'Inter',
-          fontSize: 12,
-          fontWeight: FontWeight.w500,
-          height: 16 / 12,
-          color: AppColors.textSecondary,
-        ),
-        // label-sm: 11px / 14px / medium
-        labelSmall: TextStyle(
-          fontFamily: 'Inter',
-          fontSize: 11,
-          fontWeight: FontWeight.w500,
-          height: 14 / 11,
-          color: AppColors.textSecondary,
-        ),
-      ),
-
-      // -----------------------------------------------------------------------
-      // Level 2 Sticky AppBar (Pure white, hairline bottom border, slate text)
-      // -----------------------------------------------------------------------
-      appBarTheme: const AppBarTheme(
-        backgroundColor: AppColors.surfaceCard,
+      appBarTheme: AppBarTheme(
+        backgroundColor: surfaceColor,
+        foregroundColor: textPrimary,
         elevation: 0,
         scrolledUnderElevation: 0,
         centerTitle: false,
-        systemOverlayStyle: SystemUiOverlayStyle.dark,
-        iconTheme: IconThemeData(color: AppColors.textPrimary, size: 20),
-        titleTextStyle: TextStyle(
-          fontFamily: 'Inter',
-          color: AppColors.textPrimary,
-          fontSize: 18,
-          fontWeight: FontWeight.w700,
-          letterSpacing: -0.18,
-        ),
-        shape: Border(
-          bottom: BorderSide(color: AppColors.border, width: 1),
-        ),
+        systemOverlayStyle: isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
+        iconTheme: IconThemeData(color: textPrimary, size: 20),
+        titleTextStyle: TextStyle(fontFamily: 'Inter', color: textPrimary, fontSize: 18, fontWeight: FontWeight.w700, letterSpacing: -0.18),
+        shape: Border(bottom: BorderSide(color: borderColor, width: 1)),
       ),
 
-      // -----------------------------------------------------------------------
-      // Level 1 Card Theme (16px radius, pure white, 1px hairline stroke)
-      // -----------------------------------------------------------------------
       cardTheme: CardThemeData(
-        color: AppColors.surfaceCard,
+        color: surfaceColor,
         elevation: 0,
         margin: EdgeInsets.zero,
         clipBehavior: Clip.antiAlias,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
-          side: const BorderSide(color: AppColors.border, width: 1),
+          side: BorderSide(color: borderColor, width: 1),
         ),
       ),
 
-      // -----------------------------------------------------------------------
-      // Primary Button (Royal Blue, 48px height, 12px radius, label-lg font)
-      // -----------------------------------------------------------------------
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primary,
-          foregroundColor: Colors.white,
-          disabledBackgroundColor: AppColors.primary.withValues(alpha: 0.4),
-          disabledForegroundColor: Colors.white70,
+          backgroundColor: scheme.primary,
+          foregroundColor: scheme.onPrimary,
+          disabledBackgroundColor: scheme.primary.withValues(alpha: 0.4),
+          disabledForegroundColor: scheme.onPrimary.withValues(alpha: 0.7),
           minimumSize: const Size.fromHeight(48),
           elevation: 0,
           shadowColor: Colors.transparent,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          textStyle: const TextStyle(
-            fontFamily: 'Inter',
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            height: 18 / 14,
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          textStyle: const TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w600, height: 18 / 14),
         ),
       ),
 
-      // -----------------------------------------------------------------------
-      // Secondary / Ghost Button (White card BG, 1px border, 12px radius)
-      // -----------------------------------------------------------------------
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          backgroundColor: AppColors.surfaceCard,
-          foregroundColor: AppColors.textPrimary,
-          disabledForegroundColor: AppColors.textSecondary,
+          backgroundColor: surfaceColor,
+          foregroundColor: textPrimary,
+          disabledForegroundColor: textSecondary,
           minimumSize: const Size.fromHeight(48),
           elevation: 0,
-          side: const BorderSide(color: AppColors.border, width: 1),
+          side: BorderSide(color: borderColor, width: 1),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          textStyle: const TextStyle(
-            fontFamily: 'Inter',
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            height: 18 / 14,
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          textStyle: const TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w600, height: 18 / 14),
         ),
       ),
 
-      // -----------------------------------------------------------------------
-      // Form Input Theme (12px Radius, 1px border, 16h x 14v padding)
-      // -----------------------------------------------------------------------
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: AppColors.surfaceCard,
-        hintStyle: const TextStyle(
-          fontFamily: 'Inter',
-          color: AppColors.textSecondary,
-          fontSize: 13,
-          fontWeight: FontWeight.w400,
-        ),
+        fillColor: isDark ? AppColors.darkSurfaceHigh : AppColors.lightSurfaceHigh,
+        hintStyle: TextStyle(fontFamily: 'Inter', color: textSecondary, fontSize: 13),
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.border, width: 1),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.border, width: 1),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.error, width: 1),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.error, width: 1.5),
-        ),
+        border: inputBorder(borderColor),
+        enabledBorder: inputBorder(borderColor),
+        focusedBorder: inputBorder(scheme.primary, width: 1.5),
+        errorBorder: inputBorder(scheme.error),
+        focusedErrorBorder: inputBorder(scheme.error, width: 1.5),
       ),
 
-      // -----------------------------------------------------------------------
-      // Pill & Filter Chips (Full pill geometry, tag tokens from Design.md)
-      // -----------------------------------------------------------------------
       chipTheme: ChipThemeData(
-        backgroundColor: AppColors.tagBg,
-        selectedColor: AppColors.activeFilterBg,
+        backgroundColor: palette.tagBackground,
+        selectedColor: palette.activeFilterBackground,
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
         elevation: 0,
         pressElevation: 0,
-        shape: const StadiumBorder(
-          side: BorderSide(color: AppColors.border, width: 1),
-        ),
-        labelStyle: const TextStyle(
-          fontFamily: 'Inter',
-          fontSize: 12,
-          fontWeight: FontWeight.w500,
-          color: AppColors.tagText,
-        ),
-        secondaryLabelStyle: const TextStyle(
-          fontFamily: 'Inter',
-          fontSize: 12,
-          fontWeight: FontWeight.w600,
-          color: AppColors.primary,
-        ),
+        shape: StadiumBorder(side: BorderSide(color: borderColor, width: 1)),
+        labelStyle: TextStyle(fontFamily: 'Inter', fontSize: 12, fontWeight: FontWeight.w500, color: palette.tagForeground),
+        secondaryLabelStyle: TextStyle(fontFamily: 'Inter', fontSize: 12, fontWeight: FontWeight.w600, color: scheme.primary),
       ),
 
-      // -----------------------------------------------------------------------
-      // Level 2 Bottom Navigation Bar (White, top border, Royal Blue active)
-      // -----------------------------------------------------------------------
-      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        backgroundColor: AppColors.surfaceCard,
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: surfaceColor,
         elevation: 0,
-        selectedItemColor: AppColors.primary,
-        unselectedItemColor: AppColors.textSecondary,
+        selectedItemColor: scheme.primary,
+        unselectedItemColor: textSecondary,
         type: BottomNavigationBarType.fixed,
-        selectedLabelStyle: TextStyle(
-          fontFamily: 'Inter',
-          fontSize: 11,
-          fontWeight: FontWeight.w600,
-        ),
-        unselectedLabelStyle: TextStyle(
-          fontFamily: 'Inter',
-          fontSize: 11,
-          fontWeight: FontWeight.w500,
-        ),
+        selectedLabelStyle: const TextStyle(fontFamily: 'Inter', fontSize: 11, fontWeight: FontWeight.w600),
+        unselectedLabelStyle: const TextStyle(fontFamily: 'Inter', fontSize: 11, fontWeight: FontWeight.w500),
       ),
 
-      // -----------------------------------------------------------------------
-      // Level 3 Bottom Sheet / Drawer (16px top radius, elevated white sheet)
-      // -----------------------------------------------------------------------
-      bottomSheetTheme: const BottomSheetThemeData(
-        backgroundColor: AppColors.surfaceCard,
+      navigationBarTheme: NavigationBarThemeData(
+        backgroundColor: surfaceColor,
+        indicatorColor: scheme.primaryContainer,
+        surfaceTintColor: Colors.transparent,
+        labelTextStyle: WidgetStatePropertyAll(TextStyle(fontFamily: 'Inter', fontSize: 11, color: textPrimary)),
+      ),
+
+      bottomSheetTheme: BottomSheetThemeData(
+        backgroundColor: surfaceColor,
+        modalBackgroundColor: surfaceColor,
+        surfaceTintColor: Colors.transparent,
         elevation: 12,
-        modalBackgroundColor: AppColors.surfaceCard,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-        ),
+        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
         clipBehavior: Clip.antiAlias,
       ),
 
-      // -----------------------------------------------------------------------
-      // Dividers & Structural Separators
-      // -----------------------------------------------------------------------
-      dividerTheme: const DividerThemeData(
-        color: AppColors.border,
-        thickness: 1,
-        space: 1,
+      dialogTheme: DialogThemeData(
+        backgroundColor: surfaceColor,
+        surfaceTintColor: Colors.transparent,
+        titleTextStyle: TextStyle(fontFamily: 'Inter', fontSize: 18, fontWeight: FontWeight.w700, color: textPrimary),
+        contentTextStyle: TextStyle(fontFamily: 'Inter', fontSize: 14, color: textSecondary),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
+
+      dividerTheme: DividerThemeData(color: borderColor, thickness: 1, space: 1),
+
+      switchTheme: SwitchThemeData(
+        thumbColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return scheme.onPrimary;
+          }
+          return scheme.outline;
+        }),
+        trackColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return scheme.primary;
+          }
+          return scheme.surfaceContainerHighest;
+        }),
+      ),
+
+      progressIndicatorTheme: ProgressIndicatorThemeData(color: scheme.primary, linearTrackColor: scheme.surfaceContainerHighest, circularTrackColor: scheme.surfaceContainerHighest),
     );
   }
 }

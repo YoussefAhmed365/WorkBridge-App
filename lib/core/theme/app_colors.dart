@@ -1,97 +1,125 @@
 import 'package:flutter/material.dart';
 
-/// WorkBridge Design System Color Palette (Egypt Employment & Gig Platform)
-/// Strictly aligned with Design.md specifications.
 abstract final class AppColors {
-  // ---------------------------------------------------------------------------
-  // Brand & Accent Colors
-  // ---------------------------------------------------------------------------
-  /// Primary Royal Blue anchors primary actions, verification, and active tabs.
+  // Brand colors: shared between themes.
   static const Color primary = Color(0xFF2563EB);
-  static const Color primaryActive = Color(0xFF1D4ED8); // Active/pressed state
-  static const Color primaryM3 = Color(0xFF004AC6);     // M3 deep tonal base
-  static const Color primaryContainer = Color(0xFFEFF6FF); // Soft blue chip/tint
-  static const Color onPrimary = Color(0xFFFFFFFF);
-  static const Color onPrimaryContainer = Color(0xFF00174B);
+  static const Color primaryHover = Color(0xFF3B82F6);
+  static const Color primaryActive = Color(0xFF1D4ED8);
+  static const Color success = Color(0xFF059669);
+  static const Color warning = Color(0xFFD97706);
+  static const Color danger = Color(0xFFDC2626);
 
-  /// Secondary Emerald Teal for gig services & high-value trade tags.
   static const Color secondary = Color(0xFF0D9488);
-  static const Color secondaryContainer = Color(0xFF86F2E4);
-  static const Color graySecondaryContainer = Color(0xFFE5E7EB);
-  static const Color onSecondary = Color(0xFFFFFFFF);
-  static const Color onSecondaryContainer = Color(0xFF006F66);
-
-  /// Tertiary / Success for escrow protection, match pills, and verified marks.
   static const Color tertiary = Color(0xFF10B981);
-  static const Color tertiaryContainer = Color(0xFF007D55);
-  static const Color onTertiary = Color(0xFFFFFFFF);
-  static const Color onTertiaryContainer = Color(0xFFBDFFDB);
 
-  // ---------------------------------------------------------------------------
-  // Surfaces & Backgrounds
-  // ---------------------------------------------------------------------------
-  /// Level 0 Base Background: Cool near-white canvas preventing eye fatigue.
-  static const Color background = Color(0xFFF8FAFC);
-  static const Color surfaceBg = Color(0xFFF8FAFC);
+  // Light theme.
+  static const Color lightBackground = Color(0xFFF8FAFC);
+  static const Color lightSurface = Color(0xFFFFFFFF);
+  static const Color lightSurfaceLow = Color(0xFFFFFFFF);
+  static const Color lightSurfaceContainer = Color(0xFFF8FAFC);
+  static const Color lightSurfaceHigh = Color(0xFFF1F5F9);
+  static const Color lightSurfaceHighest = Color(0xFFE2E8F0);
 
-  /// Level 1 Card & Elevated Containers: Pure white.
-  static const Color surface = Color(0xFFFFFFFF);
-  static const Color surfaceCard = Color(0xFFFFFFFF);
+  static const Color lightTextPrimary = Color(0xFF0F172A);
+  static const Color lightTextSecondary = Color(0xFF475569);
+  static const Color lightTextMuted = Color(0xFF94A3B8);
 
-  /// Material 3 Surface Containers (from Design.md YAML)
-  static const Color surfaceDim = Color(0xFFD2D9F4);
-  static const Color surfaceContainerLowest = Color(0xFFFFFFFF);
-  static const Color surfaceContainerLow = Color(0xFFF2F3FF);
-  static const Color surfaceContainer = Color(0xFFEAEDFF);
-  static const Color surfaceContainerHigh = Color(0xFFE2E7FF);
+  static const Color lightBorder = Color(0xFFE2E8F0);
+  static const Color lightBorderStrong = Color(0xFFCBD5E1);
+
+  static const Color lightPrimaryContainer = Color(0xFFEFF6FF);
+  static const Color lightOnPrimaryContainer = Color(0xFF1E40AF);
+
+  // Dark theme.
+  static const Color darkBackground = Color(0xFF0B0F19);
+  static const Color darkSurface = Color(0xFF161F30);
+  static const Color darkSurfaceLow = Color(0xFF111827);
+  static const Color darkSurfaceContainer = Color(0xFF161F30);
+  static const Color darkSurfaceHigh = Color(0xFF1F2B42);
+  static const Color darkSurfaceHighest = Color(0xFF26354D);
+
+  static const Color darkTextPrimary = Color(0xFFF8FAFC);
+  static const Color darkTextSecondary = Color(0xFF94A3B8);
+  static const Color darkTextMuted = Color(0xFF64748B);
+
+  static const Color darkBorder = Color(0xFF26354D);
+  static const Color darkBorderStrong = Color(0xFF334155);
+
+  static const Color darkPrimaryContainer = Color(0xFF1E3A8A);
+  static const Color darkOnPrimaryContainer = Color(0xFFDBEAFE);
+
+  // Semantic container colors.
+  // These are suitable defaults, but component-level colors may vary by theme.
+  static const Color lightSuccessBackground = Color(0xFFECFDF5);
+  static const Color lightSuccessText = Color(0xFF047857);
+  static const Color darkSuccessBackground = Color(0xFF064E3B);
+  static const Color darkSuccessText = Color(0xFF6EE7B7);
+
+  static const Color lightWarningBackground = Color(0xFFFFF7ED);
+  static const Color lightWarningText = Color(0xFF92400E);
+  static const Color darkWarningBackground = Color(0xFF422006);
+  static const Color darkWarningText = Color(0xFFFCD34D);
+
+  static const Color lightDangerBackground = Color(0xFFFEF2F2);
+  static const Color lightDangerText = Color(0xFFB91C1C);
+  static const Color darkDangerBackground = Color(0xFF450A0A);
+  static const Color darkDangerText = Color(0xFFFCA5A5);
+
+  // Compatibility aliases for existing widgets.
+  // Migrate widgets gradually to Theme.of(context).colorScheme.
+  static const Color background = lightBackground;
+  static const Color surfaceBg = lightBackground;
+  static const Color surface = lightSurface;
+  static const Color surfaceCard = lightSurface;
+
+  static const Color surfaceContainerLowest = lightSurfaceLow;
+  static const Color surfaceContainerLow = Color(0xFFF1F5F9);
+  static const Color surfaceContainer = Color(0xFFF1F5F9);
+  static const Color surfaceContainerHigh = Color(0xFFE2E8F0);
   static const Color surfaceContainerHighest = Color(0xFFDAE2FD);
 
-  // ---------------------------------------------------------------------------
-  // Neutrals & Typography
-  // ---------------------------------------------------------------------------
-  /// Dark slate for high typographic contrast without harshness.
-  static const Color textPrimary = Color(0xFF0F172A);
-  static const Color onSurface = Color(0xFF0F172A);
-  static const Color onSurfaceM3 = Color(0xFF131B2E);
+  static const Color textPrimary = lightTextPrimary;
+  static const Color onSurface = lightTextPrimary;
+  static const Color textSecondary = lightTextSecondary;
+  static const Color textMuted = lightTextMuted;
+  static const Color onSurfaceVariant = lightTextSecondary;
 
-  /// Muted slate for metadata, timeframes, and secondary labels.
-  static const Color textSecondary = Color(0xFF64748B);
-  static const Color textMuted = Color(0xFF64748B);
-  static const Color onSurfaceVariant = Color(0xFF434655);
+  static const Color border = lightBorder;
+  static const Color borderSubtle = lightBorder;
+  static const Color outline = Color(0xFF64748B);
+  static const Color outlineVariant = lightBorder;
 
-  // ---------------------------------------------------------------------------
-  // Borders & Structural Strokes
-  // ---------------------------------------------------------------------------
-  /// 1px Hairline structural border across cards, inputs, and dividers.
-  static const Color border = Color(0xFFE2E8F0);
-  static const Color borderSubtle = Color(0xFFE2E8F0);
-  static const Color outline = Color(0xFF737686);
-  static const Color outlineVariant = Color(0xFFC3C6D7);
+  static const Color onPrimary = Colors.white;
+  static const Color primaryContainer = lightPrimaryContainer;
+  static const Color onPrimaryContainer = lightOnPrimaryContainer;
 
-  // ---------------------------------------------------------------------------
-  // Status, Escrow & Component Pills
-  // ---------------------------------------------------------------------------
-  /// Match percentage pill (e.g. "82% Match" or "Escrow Protected").
-  static const Color badgeMatchBg = Color(0xFFECFDF5);
-  static const Color badgeMatchText = Color(0xFF059669);
+  static const Color onSecondary = Colors.white;
+  static const Color secondaryContainer = Color(0xFFCCFBF1);
+  static const Color onSecondaryContainer = Color(0xFF115E59);
 
-  /// Keyword, trade, & skill tags (e.g. "UX/UI", "Figma").
-  static const Color tagBg = Color(0xFFF1F5F9);
-  static const Color tagText = Color(0xFF475569);
+  static const Color onTertiary = Colors.white;
+  static const Color tertiaryContainer = Color(0xFFD1FAE5);
+  static const Color onTertiaryContainer = Color(0xFF065F46);
 
-  /// Filter active selection state.
-  static const Color activeFilterBg = Color(0xFFEFF6FF);
-  static const Color activeFilterBorder = Color(0xFF2563EB);
-
-  /// Status alerts (e.g. "Pending Acceptance").
-  static const Color statusWarningBg = Color(0xFFFEF3C7);   // Amber-100
-  static const Color statusWarningBorder = Color(0xFFFDE68A); // Amber-200
-  static const Color statusWarningText = Color(0xFF92400E); // Amber-800
-
-  /// Errors & critical notifications.
   static const Color error = Color(0xFFBA1A1A);
-  static const Color onError = Color(0xFFFFFFFF);
+  static const Color onError = Colors.white;
   static const Color errorContainer = Color(0xFFFFDAD6);
   static const Color onErrorContainer = Color(0xFF93000A);
   static const Color notificationRed = Color(0xFFEF4444);
+
+  // Legacy component tokens.
+  static const Color badgeMatchBg = lightSuccessBackground;
+  static const Color badgeMatchText = lightSuccessText;
+
+  static const Color tagBg = lightSurfaceHigh;
+  static const Color tagText = lightTextSecondary;
+
+  static const Color activeFilterBg = lightPrimaryContainer;
+  static const Color activeFilterBorder = primary;
+
+  static const Color statusWarningBg = Color(0xFFFEF3C7);
+  static const Color statusWarningBorder = Color(0xFFFDE68A);
+  static const Color statusWarningText = Color(0xFF92400E);
+
+  static const Color graySecondaryContainer = Color(0xFFE5E7EB);
 }

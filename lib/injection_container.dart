@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workbridge/core/localization/locale_cubit.dart';
 import 'package:workbridge/core/network/dio_client.dart';
+import 'package:workbridge/core/theme/theme_cubit.dart';
 import 'package:workbridge/core/utils/secure_storage_service.dart';
 import 'package:workbridge/features/auth/data/repositories/mock_auth_repository.dart';
 import 'package:workbridge/features/auth/domain/repositories/auth_repository.dart';
@@ -27,6 +28,9 @@ Future<void> init() async {
 
   //! Core - Localization
   sl.registerFactory<LocaleCubit>(() => LocaleCubit(sl()));
+
+  //! Core - Theme
+  sl.registerFactory<ThemeCubit>(() => ThemeCubit(sl()));
 
   //! Features - Injection Registration (Will be added per feature)
   // Auth
