@@ -17,6 +17,7 @@ abstract final class AppColors {
   /// Secondary Emerald Teal for gig services & high-value trade tags.
   static const Color secondary = Color(0xFF0D9488);
   static const Color secondaryContainer = Color(0xFF86F2E4);
+  static const Color graySecondaryContainer = Color(0xFFE5E7EB);
   static const Color onSecondary = Color(0xFFFFFFFF);
   static const Color onSecondaryContainer = Color(0xFF006F66);
 
