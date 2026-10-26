@@ -1,0 +1,73 @@
+{
+  "@@locale": "en",
+  "appName": "WorkBridge",
+  "appTitle": "WorkBridge Platform",
+  "splashLoadingState1": "Starting WorkBridge",
+  "splashLoadingState2": "Loading app configuration",
+  "splashLoadingState3": "Checking credentials",
+  "splashLoadingState4": "Ready",
+  "splashLoadingStateDefault": "Initializing...",
+  "loginSubtitle": "Welcome back! Sign in to access your jobs, gigs, and services",
+  "egyptPhoneCode": "Egypt (+20)",
+  "phoneOrEmailField": "Phone number or email",
+  "phoneOrEmailFieldHint": "01● ●●● ●●●● or email",
+  "emailExample": "email@exmaple.com",
+  "emailAddress": "Email Address",
+  "passwordField": "Password",
+  "confirmPasswordField": "Confirm password",
+  "createSecurePassword": "Create a secure password",
+  "reEnterPassword": "Re-enter your password",
+  "errorPhoneOrEmailField": "Enter a valid phone number or email",
+  "errorConfirmPasswordField": "Password must be correct",
+  "errorFieldIsEmpty": "This field can't be empty",
+  "rememberCheckbox": "Remember me",
+  "forgotPassword": "Forgot password?",
+  "login": "Log in",
+  "signup": "Sign up",
+  "next": "Next",
+  "continueLoginWithOptions": "OR CONTINUE WITH",
+  "continueSignupWithOptions": "OR SIGN UP WITH",
+  "haveNoLoginAccount": "Don't have an account?",
+  "haveLoginAccount": "Already Registered?",
+  "loginScreenFooterTerms": "By logging in, you agree to WorkBridge’s",
+  "signupScreenFooterTerms": "By signing in, you agree to WorkBridge’s",
+  "termsOfService": "Terms of Service",
+  "privacyPolicy": "Privacy Policy",
+  "welcomeUser": "Welcome back, {userName}!",
+  "@welcomeUser": {
+    "placeholders": {
+      "userName": {
+        "type": "String"
+      }
+    }
+  },
+  "jobs": "Jobs",
+  "searchJobs": "Search jobs, skills, or companies...",
+  "retry": "Retry",
+  "serverError": "A server error occurred",
+  "networkError": "Please check your internet connection",
+  "changeLanguage": "Change language",
+  "notFoundRoute": "Looks like you got lost!",
+  "step": "Step {step} of {finalStep}",
+  "@step": {
+    "placeholders": {
+      "step": {
+        "type": "int"
+      },
+      "finalStep": {
+        "type": "int"
+      }
+    }
+  },
+  "step1": "Account Credentials",
+  "step2": "Select Your Role",
+  "step3": "Personal Details",
+  "signupTitle1": "Create Your Account",
+  "signupSubtitle1": "Enter your credentials to discover gigs and jobs across Egypt.",
+  "signupTitle2": "How do you plan to use WorkBridge?",
+  "signupSubtitle2": "Select your primary role. You can interact with other features later.",
+  "signupTitle3": "Complete Your Profile",
+  "signupSubtitle3": "Tell us a bit about yourself to unlock matched gigs, full-time jobs, and shifts across Egypt.",
+  "signupTitle3BusinessProfile": "Set Up Business Profile",
+  "signupSubtitle3BusinessProfile": "Provide your company details to post jobs, discover Egyptian talent, and manage hiring across all governorates."
+}

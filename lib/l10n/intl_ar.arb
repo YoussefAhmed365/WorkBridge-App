@@ -1,0 +1,75 @@
+{
+  "@@locale": "ar",
+  "appName": "WorkBridge",
+  "appTitle": "منصة WorkBridge",
+  "splashLoadingState1": "بدء WorkBridge",
+  "splashLoadingState2": "جاري إعداد التطبيق",
+  "splashLoadingState3": "التحقق من الصلاحيات",
+  "splashLoadingState4": "جاهز",
+  "splashLoadingStateDefault": "جارٍ الإعداد...",
+  "loginSubtitle": "مرحباً بعودتك! سجل الدخول للوصول إلى وظائفك، والخدمات",
+  "egyptPhoneCode": "مصر (+20)",
+  "phoneOrEmailField": "رقم الهاتف أو البريد إلكتروني",
+  "passwordField": "كلمة المرور",
+  "confirmPasswordField": "تأكيد كلمة المرور",
+  "errorFieldIsEmpty": "لا يمكن ترك هذا الحقل فارغًا",
+  "errorPhoneOrEmailField": "أدخل رقم هاتف أو بريدًا إلكترونيًا صالحًا",
+  "errorConfirmPasswordField": "يجب أن تكون كلمة المرور صحيحة",
+  "rememberCheckbox": "تذكرني",
+  "forgotPassword": "نسيت كلمة المرور؟",
+  "login": "الدخول",
+  "signup": "تسجيل",
+  "continueLoginWithOptions": "أو الإستمرار من خلال",
+  "haveNoLoginAccount": "ليس لديك حساب؟",
+  "loginScreenFooterTerms": "بتسجيل دخولك، أنت توافق على WorkBridge’s",
+  "termsOfService": "إتفاقية الإستخدام",
+  "privacyPolicy": "سياسة الخصوصية",
+  "welcomeUser": "أهلاً بعودتك، {userName}!",
+  "@welcomeUser": {
+    "placeholders": {
+      "userName": {
+        "type": "String"
+      }
+    }
+  },
+  "jobs": "الوظائف",
+  "searchJobs": "ابحث عن وظيفة، مهارة، أو شركة...",
+  "retry": "إعادة المحاولة",
+  "serverError": "حدث خطأ في الاتصال بالسيرفر",
+  "networkError": "يرجى التحقق من الاتصال بالإنترنت",
+  "changeLanguage": "تغيير اللغة",
+  "phoneOrEmailFieldHint": "01● ●●● ●●●● أو البريد الإلكتروني",
+  "notFoundRoute": "يبدو أنك ضللت الطريق!",
+  "step": "الخطوة {step} من {finalStep}",
+  "@step": {
+    "placeholders": {
+      "step": {
+        "type": "int"
+      },
+      "finalStep": {
+        "type": "int"
+      }
+    }
+  },
+  "step3": "البيانات الشخصية",
+  "step2": "اختر دورك",
+  "step1": "بيانات اعتماد الحساب",
+  "next": "التالي",
+  "continueSignupWithOptions": "أو سجّل باستخدام",
+  "HaveLoginAccount": "مسجّل بالفعل؟",
+  "haveLoginAccount": "هل أنت مسجّل بالفعل؟",
+  "signupScreenFooterTerms": "بتسجيل دخولك، أنت توافق على WorkBridge’s",
+  "signupTitle3": "أكمل ملفك الشخصي",
+  "signupTitle3BusinessProfile": "إعداد ملف النشاط التجاري",
+  "signupTitle1": "أنشئ حسابك",
+  "signupTitle2": "كيف تخطط لاستخدام WorkBridge؟",
+  "signupSubtitle3": "أخبرنا قليلاً عن نفسك لتتمكن من الوصول إلى فرص العمل المناسبة، والوظائف بدوام كامل، والورديات في جميع أنحاء مصر.",
+  "signupSubtitle2": "اختر دورك الأساسي. يمكنك التفاعل مع الميزات الأخرى لاحقًا.",
+  "signupSubtitle1": "أدخل بياناتك لاكتشاف فرص العمل والوظائف في جميع أنحاء مصر.",
+  "signupSubtitle3BusinessProfile": "قدّم تفاصيل شركتك لنشر الوظائف، واكتشاف المواهب المصرية، وإدارة التوظيف في جميع المحافظات.",
+  "emailExample": "email@exmaple.com",
+  "emailAddress": "عنوان البريد الإلكتروني",
+  "re-enterPassword": "أعد إدخال كلمة المرور",
+  "createSecurePassword": "أنشئ كلمة مرور آمنة",
+  "reEnterPassword": "أعد إدخال كلمة المرور"
+}
