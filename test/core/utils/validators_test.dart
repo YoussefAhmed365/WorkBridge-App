@@ -61,22 +61,22 @@ void main() {
 
       test('returns null when password length is 6 or more', () {
         expect(Validators.validatePassword('123456', mockS), isNull);
-        expect(Validators.validatePassword('password123', mockS), isNull);
+        expect(Validators.validatePassword('valid_input', mockS), isNull);
       });
     });
 
     group('validateConfirmPassword', () {
       test('returns error when confirm password is null or empty', () {
-        expect(Validators.validateConfirmPassword(null, 'Pass123!', mockS), equals('Field is required'));
-        expect(Validators.validateConfirmPassword('', 'Pass123!', mockS), equals('Field is required'));
+        expect(Validators.validateConfirmPassword(null, 'ValidInput#1', mockS), equals('Field is required'));
+        expect(Validators.validateConfirmPassword('', 'ValidInput#1', mockS), equals('Field is required'));
       });
 
       test('returns error when confirm password does not match password', () {
-        expect(Validators.validateConfirmPassword('Pass123', 'Pass123!', mockS), equals('Password requirement not met'));
+        expect(Validators.validateConfirmPassword('ValidInput', 'ValidInput#1', mockS), equals('Password requirement not met'));
       });
 
       test('returns null when confirm password matches password', () {
-        expect(Validators.validateConfirmPassword('Pass123!', 'Pass123!', mockS), isNull);
+        expect(Validators.validateConfirmPassword('ValidInput#1', 'ValidInput#1', mockS), isNull);
       });
     });
 

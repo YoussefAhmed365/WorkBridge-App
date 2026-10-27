@@ -14,7 +14,7 @@ void main() {
   group('MockAuthRepository', () {
     group('login', () {
       test('returns Right(UserModel) on valid credentials', () async {
-        final result = await repository.login('youssef.ahmed5002@gmail.com', 'password123');
+        final result = await repository.login('youssef.ahmed5002@gmail.com', 'any_text');
 
         expect(result.isRight(), isTrue);
         result.fold(
@@ -28,7 +28,7 @@ void main() {
       });
 
       test('returns Left(ServerFailure) on "error@workbridge.eg"', () async {
-        final result = await repository.login('error@workbridge.eg', 'password123');
+        final result = await repository.login('error@workbridge.eg', 'any_text');
 
         expect(result.isLeft(), isTrue);
         result.fold(
@@ -43,7 +43,7 @@ void main() {
 
     group('register', () {
       test('returns Right(UserModel) with generated ID', () async {
-        final result = await repository.register('Ahmed', 'ahmed@workbridge.eg', 'pass123', 'JOB_SEEKER');
+        final result = await repository.register('Ahmed', 'ahmed@workbridge.eg', 'any_text', 'JOB_SEEKER');
 
         expect(result.isRight(), isTrue);
         result.fold(

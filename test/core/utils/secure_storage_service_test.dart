@@ -19,21 +19,21 @@ void main() {
     const userRoleKey = 'user_role';
 
     test('saveToken writes token to secure storage', () async {
-      when(() => mockStorage.write(key: tokenKey, value: 'test_token'))
+      when(() => mockStorage.write(key: tokenKey, value: 'dummy_token'))
           .thenAnswer((_) async => {});
 
-      await secureStorageService.saveToken('test_token');
+      await secureStorageService.saveToken('dummy_token');
 
-      verify(() => mockStorage.write(key: tokenKey, value: 'test_token')).called(1);
+      verify(() => mockStorage.write(key: tokenKey, value: 'dummy_token')).called(1);
     });
 
     test('getToken retrieves token from secure storage', () async {
       when(() => mockStorage.read(key: tokenKey))
-          .thenAnswer((_) async => 'test_token');
+          .thenAnswer((_) async => 'dummy_token');
 
       final token = await secureStorageService.getToken();
 
-      expect(token, equals('test_token'));
+      expect(token, equals('dummy_token'));
       verify(() => mockStorage.read(key: tokenKey)).called(1);
     });
 

@@ -44,7 +44,7 @@ void main() {
     });
 
     test('interceptor adds Authorization header when token is present', () async {
-      when(() => mockSecureStorageService.getToken()).thenAnswer((_) async => 'valid_token');
+      when(() => mockSecureStorageService.getToken()).thenAnswer((_) async => 'dummy_token');
 
       DioClient(mockDio, mockSecureStorageService);
       final interceptor = interceptors.whereType<InterceptorsWrapper>().first;
@@ -55,7 +55,7 @@ void main() {
       interceptor.onRequest(requestOptions, handler);
       await Future.delayed(Duration.zero);
 
-      expect(requestOptions.headers['Authorization'], equals('Bearer valid_token'));
+      expect(requestOptions.headers['Authorization'], equals('Bearer dummy_token'));
     });
 
     test('interceptor omits Authorization header when token is null or empty', () async {
