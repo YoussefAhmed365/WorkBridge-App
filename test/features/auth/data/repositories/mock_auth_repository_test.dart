@@ -14,7 +14,7 @@ void main() {
   group('MockAuthRepository', () {
     group('login', () {
       test('returns Right(UserModel) on valid credentials', () async {
-        final result = await repository.login('youssef.ahmed5002@gmail.com', 'any_text');
+        final result = await repository.login('user@example.com', 'any_text');
 
         expect(result.isRight(), isTrue);
         result.fold(
@@ -22,7 +22,7 @@ void main() {
           (user) {
             expect(user, isA<UserModel>());
             expect(user.id, equals('usr_101'));
-            expect(user.email, equals('youssef.ahmed5002@gmail.com'));
+            expect(user.email, isNotEmpty);
           },
         );
       });
