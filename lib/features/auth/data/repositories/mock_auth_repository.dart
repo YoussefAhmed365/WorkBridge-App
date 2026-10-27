@@ -11,7 +11,7 @@ class MockAuthRepository implements AuthRepository {
     if (email == 'error@workbridge.eg') {
       return const Left(ServerFailure('Credentials Are Not Correct'));
     }
-    const user = UserModel(id: 'usr_101', name: 'Youssef Ahmed', email: 'youssef.ahmed5002@gmail.com', role: 'JOB_SEEKER');
+    const user = UserModel(id: 'usr_101', name: 'Youssef Ahmed', email: 'user@workbridge.eg', role: 'JOB_SEEKER');
     return const Right(user);
   }
 
