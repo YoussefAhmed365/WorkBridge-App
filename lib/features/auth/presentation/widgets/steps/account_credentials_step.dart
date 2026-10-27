@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:workbridge/core/theme/theme_extension.dart';
 import 'package:workbridge/core/widgets/app_text_field.dart';
-import 'package:workbridge/core/theme/app_colors.dart';
 import 'package:workbridge/generated/l10n.dart';
 
 class AccountCredentialsStep extends StatefulWidget {
   final GlobalKey<FormState> formKey;
   final VoidCallback onSubmitStep;
 
-  const AccountCredentialsStep({ super.key, required this.formKey, required this.onSubmitStep });
+  const AccountCredentialsStep({
+    super.key,
+    required this.formKey,
+    required this.onSubmitStep,
+  });
 
   @override
   State<AccountCredentialsStep> createState() => _AccountCredentialsStepState();
@@ -95,6 +99,7 @@ class _AccountCredentialsStepState extends State<AccountCredentialsStep> {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     final l10n = S.of(context);
 
     return Form(
@@ -124,11 +129,8 @@ class _AccountCredentialsStepState extends State<AccountCredentialsStep> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  l10n.emailAddress,
-                  style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14, color: Colors.black87),
-                ),
-                const Text("Required", style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+                Text(l10n.emailAddress, style: textTheme.labelLarge),
+                Text("Required", style: textTheme.labelMedium),
               ],
             ),
             const SizedBox(height: 8),
@@ -140,16 +142,16 @@ class _AccountCredentialsStepState extends State<AccountCredentialsStep> {
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.next,
               validator: (value) => _validatePhoneOrEmail(value, l10n),
-              prefixIcon: const Icon(Icons.mail_outline_rounded, color: AppColors.textSecondary),
+              prefixIcon: Icon(
+                Icons.mail_outline_rounded,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
             ),
 
             const SizedBox(height: 16),
 
             // Password Label
-            Text(
-              l10n.passwordField,
-              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14, color: Colors.black87),
-            ),
+            Text(l10n.passwordField, style: textTheme.labelLarge),
             const SizedBox(height: 8),
             AppTextField(
               controller: _passwordController,
@@ -158,7 +160,10 @@ class _AccountCredentialsStepState extends State<AccountCredentialsStep> {
               isRequired: false,
               textInputAction: TextInputAction.next,
               validator: (value) => _validatePassword(value, l10n),
-              prefixIcon: const Icon(Icons.lock_outline_rounded, color: AppColors.textSecondary),
+              prefixIcon: Icon(
+                Icons.lock_outline_rounded,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
             ),
 
             const SizedBox(height: 12),
@@ -169,10 +174,7 @@ class _AccountCredentialsStepState extends State<AccountCredentialsStep> {
             const SizedBox(height: 16),
 
             // Confirm Password Label
-            Text(
-              l10n.confirmPasswordField,
-              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14, color: Colors.black87),
-            ),
+            Text(l10n.confirmPasswordField, style: textTheme.labelLarge),
             const SizedBox(height: 8),
             AppTextField(
               controller: _confirmPasswordController,
@@ -181,7 +183,10 @@ class _AccountCredentialsStepState extends State<AccountCredentialsStep> {
               isRequired: false,
               textInputAction: TextInputAction.done,
               validator: (value) => _validateConfirmPassword(value, l10n),
-              prefixIcon: const Icon(Icons.lock_outline_rounded, color: AppColors.textSecondary),
+              prefixIcon: Icon(
+                Icons.lock_outline_rounded,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
             ),
           ],
         ),
@@ -190,13 +195,13 @@ class _AccountCredentialsStepState extends State<AccountCredentialsStep> {
   }
 
   Widget _buildPasswordStrengthSection() {
+    final textTheme = Theme.of(context).textTheme;
+    final colors = Theme.of(context).colorScheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          "Password Strength",
-          style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppColors.textSecondary),
-        ),
+        Text("Password Strength", style: textTheme.labelMedium),
         const SizedBox(height: 6),
 
         // 4 Strength Bars
@@ -205,10 +210,14 @@ class _AccountCredentialsStepState extends State<AccountCredentialsStep> {
             final isFilled = index < _strengthScore;
             return Expanded(
               child: AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
+                curve: Curves.easeOut,
+                duration: const Duration(milliseconds: 500),
                 height: 5,
                 margin: EdgeInsets.only(right: index < 3 ? 6 : 0),
-                decoration: BoxDecoration(color: isFilled ? AppColors.tertiary : AppColors.graySecondaryContainer, borderRadius: BorderRadius.circular(10)),
+                decoration: BoxDecoration(
+                  color: isFilled ? colors.tertiary : colors.outline,
+                  borderRadius: BorderRadius.circular(10),
+                ),
               ),
             );
           }),
@@ -217,24 +226,46 @@ class _AccountCredentialsStepState extends State<AccountCredentialsStep> {
         const SizedBox(height: 10),
 
         // 3 Rule Badges
-        Wrap(spacing: 6, runSpacing: 6, children: [_buildRuleBadge("8+ characters", _hasMinLength), _buildRuleBadge("1 number of symbol", _hasNumberOrSymbol), _buildRuleBadge("Upper & lower case", _hasUpperAndLower)]),
+        Wrap(
+          spacing: 6,
+          runSpacing: 6,
+          children: [
+            _buildRuleBadge("8+ characters", _hasMinLength),
+            _buildRuleBadge("contains symbols", _hasNumberOrSymbol),
+            _buildRuleBadge("Upper & lower case", _hasUpperAndLower),
+          ],
+        ),
       ],
     );
   }
 
   Widget _buildRuleBadge(String text, bool isMet) {
+    final colors = Theme.of(context).colorScheme;
+    final palette = Theme.of(context).extension<WorkBridgeThemeExtension>()!;
+
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 200),
+      curve: Curves.easeOut,
+      duration: const Duration(milliseconds: 500),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-      decoration: BoxDecoration(color: isMet ? AppColors.badgeMatchBg : AppColors.graySecondaryContainer, borderRadius: BorderRadius.circular(20)),
+      decoration: BoxDecoration(
+        color: isMet ? palette.matchBackground : colors.onInverseSurface,
+        borderRadius: BorderRadius.circular(20),
+      ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.check, size: 14, color: isMet ? AppColors.badgeMatchText : AppColors.textSecondary),
-          const SizedBox(width: 4),
+          if (isMet)
+            Icon(
+              Icons.check,
+              size: 14,
+              color: isMet ? palette.matchForeground : colors.outline,
+            ),
+          if (isMet) const SizedBox(width: 4),
           Text(
             text,
-            style: Theme.of(context).textTheme.labelMedium?.copyWith(color: isMet ? AppColors.badgeMatchText : AppColors.textSecondary),
+            style: Theme.of(context).textTheme.labelMedium?.copyWith(
+              color: isMet ? palette.matchForeground : colors.outline,
+            ),
           ),
         ],
       ),

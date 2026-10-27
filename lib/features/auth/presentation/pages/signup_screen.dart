@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:workbridge/core/utils/app_assets.dart';
 import 'package:workbridge/core/widgets/app_button.dart';
-import 'package:workbridge/core/theme/app_colors.dart';
 import 'package:workbridge/features/auth/presentation/widgets/signup_step_counter.dart';
 import 'package:workbridge/features/auth/presentation/widgets/steps/account_credentials_step.dart';
 import 'package:workbridge/generated/l10n.dart';
@@ -34,12 +33,18 @@ class _SignupScreenState extends State<SignupScreen> {
 
   void _nextStep() {
     if (_currentStep >= _totalSteps - 1) return;
-    _pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+    _pageController.nextPage(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
   }
 
   void _previousStep() {
     if (_currentStep <= 0) return;
-    _pageController.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+    _pageController.previousPage(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
   }
 
   bool _validateCurrentStep() {
@@ -77,7 +82,9 @@ class _SignupScreenState extends State<SignupScreen> {
     } catch (error) {
       if (!mounted) return;
 
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Registration failed. Please try again.')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Registration failed. Please try again.')),
+      );
     } finally {
       if (mounted) {
         setState(() => _isSubmitting = false);
@@ -111,21 +118,33 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final colors = Theme.of(context).colorScheme;
     final l10n = S.of(context);
 
     return Scaffold(
-      // يمنع تحرك الجزء السفلي عند فتح لوحة المفاتيح
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: colors.surface,
         elevation: 0,
-        leading: Image.asset(AppAssets.appIconTransparent, semanticLabel: l10n.appName),
+        leading: Image.asset(
+          AppAssets.appIconTransparent,
+          semanticLabel: l10n.appName,
+        ),
         title: Wrap(
           children: [
-            Text("Work", style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
+            Text(
+              "Work",
+              style: Theme.of(
+                context,
+              ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+            ),
             Text(
               "Bridge",
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold, color: AppColors.primary),
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: colors.primary,
+              ),
             ),
           ],
         ),
@@ -142,7 +161,10 @@ class _SignupScreenState extends State<SignupScreen> {
             // 1. Step Indicator
             Padding(
               padding: const EdgeInsets.only(left: 24, right: 24, top: 20),
-              child: SignupStepCounter(step: _currentStep, stepName: _getStepName(l10n)),
+              child: SignupStepCounter(
+                step: _currentStep,
+                stepName: _getStepName(l10n),
+              ),
             ),
             const SizedBox(height: 28),
 
@@ -154,7 +176,12 @@ class _SignupScreenState extends State<SignupScreen> {
                 onPageChanged: (index) {
                   setState(() => _currentStep = index);
                 },
-                children: [AccountCredentialsStep(formKey: _credentialsFormKey, onSubmitStep: _handleNext)],
+                children: [
+                  AccountCredentialsStep(
+                    formKey: _credentialsFormKey,
+                    onSubmitStep: _handleNext,
+                  ),
+                ],
               ),
             ),
 
@@ -184,15 +211,15 @@ class _SignupScreenState extends State<SignupScreen> {
                     // OR SIGN UP WITH Divider
                     Row(
                       children: [
-                        const Expanded(child: Divider(color: AppColors.border)),
+                        Expanded(child: Divider(color: colors.outline)),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 12.0),
                           child: Text(
                             l10n.continueSignupWithOptions.toUpperCase(),
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textSecondary, fontSize: 11, fontWeight: FontWeight.w600, letterSpacing: 0.5),
+                            style: Theme.of(context).textTheme.bodySmall,
                           ),
                         ),
-                        const Expanded(child: Divider(color: AppColors.border)),
+                        Expanded(child: Divider(color: colors.outline)),
                       ],
                     ),
                     const SizedBox(height: 12),
@@ -204,14 +231,23 @@ class _SignupScreenState extends State<SignupScreen> {
                           child: OutlinedButton.icon(
                             style: OutlinedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(vertical: 12),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                              side: const BorderSide(color: AppColors.border),
-                              backgroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              side: BorderSide(color: colors.outlineVariant),
+                              backgroundColor: colors.surface,
                             ),
-                            icon: const Icon(Icons.g_mobiledata_rounded, size: 24, color: Colors.red),
-                            label: const Text(
+                            icon: Icon(
+                              Icons.g_mobiledata_rounded,
+                              size: 24,
+                              color: colors.error,
+                            ),
+                            label: Text(
                               "Google",
-                              style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w600),
+                              style: TextStyle(
+                                color: colors.onSurface,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                             onPressed: () {},
                           ),
@@ -221,14 +257,25 @@ class _SignupScreenState extends State<SignupScreen> {
                           child: ElevatedButton.icon(
                             style: ElevatedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(vertical: 12),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                              backgroundColor: const Color(0xFF1877F2), // Facebook Blue
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              backgroundColor: const Color(
+                                0xFF1877F2,
+                              ), // Facebook Blue
                               elevation: 0,
                             ),
-                            icon: const Icon(Icons.facebook, size: 20, color: Colors.white),
+                            icon: const Icon(
+                              Icons.facebook,
+                              size: 20,
+                              color: Colors.white,
+                            ),
                             label: const Text(
                               "Facebook",
-                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                             onPressed: () {},
                           ),
@@ -243,13 +290,17 @@ class _SignupScreenState extends State<SignupScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(l10n.haveLoginAccount, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.textSecondary)),
+                      Text(l10n.haveLoginAccount, style: textTheme.bodyMedium),
                       const SizedBox(width: 4),
                       GestureDetector(
                         onTap: () => context.push('/login'),
                         child: Text(
                           l10n.login,
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.primary, fontWeight: FontWeight.bold),
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(
+                                color: colors.primary,
+                                fontWeight: FontWeight.bold,
+                              ),
                         ),
                       ),
                     ],
@@ -262,20 +313,31 @@ class _SignupScreenState extends State<SignupScreen> {
                     alignment: WrapAlignment.center,
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
-                      Text(l10n.signupScreenFooterTerms, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textSecondary, fontSize: 11)),
+                      Text(
+                        "${l10n.signupScreenFooterTerms} ",
+                        style: textTheme.bodySmall,
+                      ),
                       GestureDetector(
                         onTap: () {},
                         child: Text(
                           l10n.termsOfService,
-                          style: const TextStyle(color: AppColors.textSecondary, decoration: TextDecoration.underline, fontSize: 11, fontWeight: FontWeight.w600),
+                          style: textTheme.bodySmall?.copyWith(
+                            decoration: TextDecoration.underline,
+                            fontSize: 11,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
-                      const Text(" & ", style: TextStyle(fontSize: 11, color: AppColors.textSecondary)),
+                      Text(" & ", style: textTheme.bodySmall),
                       GestureDetector(
                         onTap: () {},
                         child: Text(
                           l10n.privacyPolicy,
-                          style: const TextStyle(color: AppColors.textSecondary, decoration: TextDecoration.underline, fontSize: 11, fontWeight: FontWeight.w600),
+                          style: textTheme.bodySmall?.copyWith(
+                            decoration: TextDecoration.underline,
+                            fontSize: 11,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ],

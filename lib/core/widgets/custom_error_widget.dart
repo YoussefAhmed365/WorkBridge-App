@@ -43,6 +43,9 @@ class CustomErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     final content = Padding(
       padding: EdgeInsets.all(isCompact ? 16.0 : 24.0),
       child: Center(
@@ -58,11 +61,11 @@ class CustomErrorWidget extends StatelessWidget {
               width: isCompact ? 52 : 64,
               height: isCompact ? 52 : 64,
               decoration: BoxDecoration(
-                color: const Color(0xFFFEF2F2), // Soft Error Tint
+                color: colors.onErrorContainer, // Soft Error Tint
                 shape: BoxShape.circle,
-                border: Border.all(color: AppColors.error.withValues(alpha: 0.12), width: 1.5),
+                border: Border.all(color: colors.errorContainer.withAlpha(31), width: 1.5),
               ),
-              child: Icon(icon, color: AppColors.error, size: isCompact ? 26 : 32),
+              child: Icon(icon, color: colors.error, size: isCompact ? 26 : 32),
             ),
             SizedBox(height: isCompact ? 12 : 16),
 
@@ -73,7 +76,7 @@ class CustomErrorWidget extends StatelessWidget {
               Text(
                 title!,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontFamily: 'Inter', fontSize: isCompact ? 15 : 16, fontWeight: FontWeight.w600, height: 22 / 16, letterSpacing: -0.16, color: AppColors.textPrimary),
+                style: textTheme.titleMedium?.copyWith(fontSize: isCompact ? 15 : 16),
               ),
               const SizedBox(height: 6),
             ],
@@ -86,7 +89,7 @@ class CustomErrorWidget extends StatelessWidget {
               child: Text(
                 message,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontFamily: 'Inter', fontSize: 13, fontWeight: FontWeight.w400, height: 18 / 13, color: AppColors.textSecondary),
+                style: textTheme.bodyMedium,
               ),
             ),
 
@@ -108,9 +111,9 @@ class CustomErrorWidget extends StatelessWidget {
       return Container(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: AppColors.surfaceCard,
+          color: colors.onPrimary,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AppColors.border, width: 1.0),
+          border: Border.all(color: colors.outline, width: 1.0),
         ),
         child: content,
       );

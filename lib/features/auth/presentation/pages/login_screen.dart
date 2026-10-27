@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:workbridge/core/theme/app_colors.dart';
 import 'package:workbridge/core/utils/app_assets.dart';
 import 'package:workbridge/core/widgets/app_button.dart';
 import 'package:workbridge/core/widgets/app_text_field.dart';
@@ -91,6 +90,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final colors = Theme.of(context).colorScheme;
     final l10n = S.of(context);
 
     return Scaffold(
@@ -109,9 +110,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Image.asset(AppAssets.appIcon, height: 64, width: 64, fit: BoxFit.contain, semanticLabel: l10n.appName),
                   ),
                   const SizedBox(height: 16),
-                  Text(l10n.appName, style: Theme.of(context).textTheme.titleMedium),
+                  Text(l10n.appName, style: textTheme.titleLarge),
                   const SizedBox(height: 8),
-                  Text(l10n.loginSubtitle, style: Theme.of(context).textTheme.bodySmall, textAlign: TextAlign.center),
+                  Text(l10n.loginSubtitle, style: textTheme.bodyMedium, textAlign: TextAlign.center),
                   const SizedBox(height: 30),
                   AppTextField(
                     controller: _phoneOrEmailController,
@@ -123,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
                     validator: (value) => _validatePhoneOrEmail(value, l10n),
-                    prefixIcon: const Icon(Icons.person_outline_rounded, color: AppColors.textSecondary),
+                    prefixIcon: Icon(Icons.person_outline_rounded, color: colors.outline),
                   ),
                   const SizedBox(height: 16),
                   AppTextField(
@@ -140,14 +141,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     textInputAction: TextInputAction.done,
                     onFieldSubmitted: (_) => _handleLogin(),
                     validator: (value) => _validatePassword(value, l10n),
-                    prefixIcon: const Icon(Icons.lock_outline_rounded, color: AppColors.textSecondary),
+                    prefixIcon: Icon(Icons.lock_outline_rounded, color: colors.outline),
                   ),
                   const SizedBox(height: 8),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Checkbox(value: _rememberValue, activeColor: AppColors.primary, onChanged: (value) => setState(() => _rememberValue = value ?? false)),
-                      Text(l10n.rememberCheckbox, style: Theme.of(context).textTheme.bodyMedium),
+                      Checkbox(value: _rememberValue, activeColor: colors.primary, onChanged: (value) => setState(() => _rememberValue = value ?? false)),
+                      Text(l10n.rememberCheckbox, style: textTheme.labelMedium),
                     ],
                   ),
                   const SizedBox(height: 12),
@@ -155,12 +156,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 24),
                   Row(
                     children: [
-                      const Expanded(child: Divider(color: AppColors.border)),
+                      Expanded(child: Divider(color: colors.outline)),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                        child: Text(l10n.continueLoginWithOptions, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textSecondary)),
+                        child: Text(l10n.continueLoginWithOptions, style: textTheme.bodySmall),
                       ),
-                      const Expanded(child: Divider(color: AppColors.border)),
+                      Expanded(child: Divider(color: colors.outline)),
                     ],
                   ),
                   const SizedBox(height: 16),
@@ -183,37 +184,39 @@ class _LoginScreenState extends State<LoginScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(l10n.haveNoLoginAccount, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.textSecondary)),
+                            Text(l10n.haveNoLoginAccount, style: textTheme.bodyMedium),
                             const SizedBox(width: 4),
                             TextButton(
                               style: TextButton.styleFrom(padding: EdgeInsets.zero, minimumSize: Size.zero, tapTargetSize: MaterialTapTargetSize.shrinkWrap),
                               onPressed: () => context.push("/signup"),
                               child: Text(
                                 l10n.signup,
-                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.primary, fontWeight: FontWeight.bold),
+                                style: textTheme.bodyMedium?.copyWith(color: colors.primary, fontWeight: FontWeight.bold),
                               ),
                             ),
                           ],
                         ),
                         const SizedBox(height: 70),
-                        Text(l10n.loginScreenFooterTerms),
-                        Row(
-                          mainAxisAlignment: .center,
+                        // Terms & Privacy Policy Footer
+                        Wrap(
+                          alignment: WrapAlignment.center,
+                          crossAxisAlignment: WrapCrossAlignment.center,
                           children: [
-                            TextButton(
+                            Text("${l10n.signupScreenFooterTerms} ", style: textTheme.bodySmall),
+                            GestureDetector(
+                              onTap: () {},
                               child: Text(
                                 l10n.termsOfService,
-                                style: TextStyle(color: AppColors.textSecondary, decoration: TextDecoration.underline),
+                                style: textTheme.bodySmall?.copyWith(decoration: TextDecoration.underline, fontSize: 11, fontWeight: FontWeight.w600),
                               ),
-                              onPressed: () {},
                             ),
-                            Text("&"),
-                            TextButton(
+                            Text(" & ", style: textTheme.bodySmall),
+                            GestureDetector(
+                              onTap: () {},
                               child: Text(
                                 l10n.privacyPolicy,
-                                style: TextStyle(color: AppColors.textSecondary, decoration: TextDecoration.underline),
+                                style: textTheme.bodySmall?.copyWith(decoration: TextDecoration.underline, fontSize: 11, fontWeight: FontWeight.w600),
                               ),
-                              onPressed: () {},
                             ),
                           ],
                         ),

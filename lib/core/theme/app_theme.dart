@@ -15,7 +15,7 @@ class AppTheme {
     primary: AppColors.primary,
     onPrimary: Colors.white,
     primaryContainer: AppColors.lightPrimaryContainer,
-    onPrimaryContainer: AppColors.lightOnPrimaryContainer,
+    onPrimaryContainer: Color(0xFF0E0D0D),
     secondary: Color(0xFF0D9488),
     onSecondary: Colors.white,
     secondaryContainer: Color(0xFFCCFBF1),
@@ -33,7 +33,7 @@ class AppTheme {
     onSurfaceVariant: AppColors.lightTextSecondary,
     outline: Color(0xFF64748B),
     outlineVariant: AppColors.lightBorder,
-    surfaceContainerLowest: Color(0xFFFFFFFF),
+    surfaceContainerLowest: Colors.white,
     surfaceContainerLow: Color(0xFFF8FAFC),
     surfaceContainer: Color(0xFFF1F5F9),
     surfaceContainerHigh: Color(0xFFF1F5F9),
@@ -42,7 +42,7 @@ class AppTheme {
 
   static const ColorScheme _darkScheme = ColorScheme.dark(
     primary: Color(0xFF3B82F6),
-    onPrimary: Color(0xFFFFFFFF),
+    onPrimary: Colors.white,
     primaryContainer: Color(0xFF1E3A8A),
     onPrimaryContainer: Color(0xFFDBEAFE),
     secondary: Color(0xFF2DD4BF),

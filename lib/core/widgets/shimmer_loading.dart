@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme/app_colors.dart';
+import 'package:workbridge/core/theme/theme_extension.dart';
 
 /// Synchronized Shimmer Gradient Wrapper
 ///
@@ -35,10 +35,13 @@ class _ShimmerState extends State<Shimmer> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    final palette = Theme.of(context).extension<WorkBridgeThemeExtension>()!;
+
     if (!widget.enabled) return widget.child;
 
-    final base = widget.baseColor ?? AppColors.tagBg; // #F1F5F9
-    final highlight = widget.highlightColor ?? Colors.white;
+    final base = widget.baseColor ?? palette.tagBackground;
+    final highlight = widget.highlightColor ?? colors.onPrimary;
 
     return AnimatedBuilder(
       animation: _controller,
@@ -95,7 +98,7 @@ class ShimmerBox extends StatelessWidget {
       width: width,
       height: height,
       decoration: ShapeDecoration(
-        color: color ?? AppColors.tagBg,
+        color: color ?? Theme.of(context).extension<WorkBridgeThemeExtension>()!.tagBackground,
         shape: shape ?? RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius)),
       ),
     );
@@ -114,13 +117,15 @@ class JobCardSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+
     return Container(
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
       decoration: BoxDecoration(
-        color: AppColors.surfaceCard,
+        color: colors.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.border, width: 1.0),
+        border: Border.all(color: colors.outline, width: 1.0),
       ),
       child: Shimmer(
         child: Column(
@@ -149,7 +154,7 @@ class JobCardSkeleton extends StatelessWidget {
             const SizedBox(height: 14),
 
             // Hairline separator
-            Container(height: 1.0, color: AppColors.border),
+            Container(height: 1.0, color: colors.outline),
             const SizedBox(height: 12),
 
             // Footer Skill Tags (Pill / Stadium Contour)
@@ -173,6 +178,9 @@ class ContractAgreementSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    final palette = Theme.of(context).extension<WorkBridgeThemeExtension>()!;
+
     return SingleChildScrollView(
       physics: const NeverScrollableScrollPhysics(),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -183,9 +191,9 @@ class ContractAgreementSkeleton extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
-                color: AppColors.surfaceCard,
+                color: colors.surface,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppColors.border),
+                border: Border.all(color: colors.outline),
               ),
               child: const Row(
                 children: [
@@ -201,9 +209,9 @@ class ContractAgreementSkeleton extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppColors.surfaceCard,
+                color: colors.surface,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppColors.border),
+                border: Border.all(color: colors.outline),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -215,7 +223,7 @@ class ContractAgreementSkeleton extends StatelessWidget {
                       Expanded(
                         child: Container(
                           padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(color: AppColors.tagBg, borderRadius: BorderRadius.circular(12)),
+                          decoration: BoxDecoration(color: palette.tagBackground, borderRadius: BorderRadius.circular(12)),
                           child: const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [ShimmerBox(width: 50, height: 10), SizedBox(height: 8), ShimmerBox(width: 36, height: 36, borderRadius: 8), SizedBox(height: 8), ShimmerBox(width: 75, height: 12)]),
                         ),
                       ),
@@ -223,7 +231,7 @@ class ContractAgreementSkeleton extends StatelessWidget {
                       Expanded(
                         child: Container(
                           padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(color: AppColors.tagBg, borderRadius: BorderRadius.circular(12)),
+                          decoration: BoxDecoration(color: palette.tagBackground, borderRadius: BorderRadius.circular(12)),
                           child: const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [ShimmerBox(width: 50, height: 10), SizedBox(height: 8), ShimmerBox.circle(size: 36), SizedBox(height: 8), ShimmerBox(width: 75, height: 12)]),
                         ),
                       ),
@@ -238,9 +246,9 @@ class ContractAgreementSkeleton extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppColors.surfaceCard,
+                color: colors.surface,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppColors.border),
+                border: Border.all(color: colors.outline),
               ),
               child: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -261,9 +269,9 @@ class ContractAgreementSkeleton extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppColors.surfaceCard,
+                color: colors.surface,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppColors.border),
+                border: Border.all(color: colors.outline),
               ),
               child: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:workbridge/core/theme/app_colors.dart';
+import 'package:workbridge/core/theme/theme_extension.dart';
 
 /// WorkBridge System Input Field
 ///
@@ -103,6 +104,9 @@ class _AppTextFieldState extends State<AppTextField> {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final colors = Theme.of(context).colorScheme;
+    final palette = Theme.of(context).extension<WorkBridgeThemeExtension>()!;
     final effectiveRadius = BorderRadius.circular(widget.borderRadius);
 
     return Column(
@@ -121,12 +125,12 @@ class _AppTextFieldState extends State<AppTextField> {
                 RichText(
                   text: TextSpan(
                     text: widget.label!,
-                    style: const TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w600, height: 18 / 14, color: AppColors.textPrimary),
+                    style: textTheme.labelLarge,
                     children: [
                       if (widget.isRequired)
-                        const TextSpan(
+                        TextSpan(
                           text: ' *',
-                          style: TextStyle(color: AppColors.error, fontWeight: FontWeight.w700),
+                          style: TextStyle(color: palette.dangerForeground, fontWeight: FontWeight.w700),
                         ),
                     ],
                   ),
@@ -137,7 +141,7 @@ class _AppTextFieldState extends State<AppTextField> {
                   behavior: HitTestBehavior.opaque,
                   child: Text(
                     widget.actionLabel!,
-                    style: const TextStyle(fontFamily: 'Inter', fontSize: 12, fontWeight: FontWeight.w600, height: 16 / 12, color: AppColors.primary),
+                    style: TextStyle(fontFamily: 'Inter', fontSize: 12, fontWeight: FontWeight.w600, height: 16 / 12, color: colors.primary),
                   ),
                 ),
             ],
@@ -165,30 +169,31 @@ class _AppTextFieldState extends State<AppTextField> {
           minLines: widget.minLines,
           maxLength: widget.maxLength,
           onTap: widget.onTap,
-          cursorColor: AppColors.primary,
+          cursorColor: colors.primary,
           cursorWidth: 1.5,
-          style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w400, height: 20 / 14, color: widget.enabled ? AppColors.textPrimary : AppColors.textSecondary),
+          style: textTheme.bodyLarge,
+          // style: TextStyle(fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w400, height: 20 / 14, color: widget.enabled ? colors.onPrimaryContainer : colors.outline),
           decoration: InputDecoration(
             hintText: widget.hint,
             helperText: widget.helperText,
             errorText: widget.errorText,
             filled: true,
-            fillColor: widget.enabled ? AppColors.surfaceCard : AppColors.tagBg,
-            hintStyle: const TextStyle(fontFamily: 'Inter', color: AppColors.textSecondary, fontSize: 13, fontWeight: FontWeight.w400, height: 18 / 13),
-            helperStyle: const TextStyle(fontFamily: 'Inter', color: AppColors.textSecondary, fontSize: 11, fontWeight: FontWeight.w500),
-            errorStyle: const TextStyle(fontFamily: 'Inter', color: AppColors.error, fontSize: 11, fontWeight: FontWeight.w500),
+            fillColor: widget.enabled ? colors.surface : colors.surfaceContainer,
+            hintStyle: TextStyle(fontFamily: 'Inter', color: colors.outline, fontSize: 13, fontWeight: FontWeight.w400, height: 18 / 13),
+            helperStyle: TextStyle(fontFamily: 'Inter', color: colors.outline, fontSize: 11, fontWeight: FontWeight.w500),
+            errorStyle: TextStyle(fontFamily: 'Inter', color: palette.dangerForeground, fontSize: 11, fontWeight: FontWeight.w500),
             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             prefixIconConstraints: const BoxConstraints(minWidth: 44, minHeight: 44),
             suffixIconConstraints: const BoxConstraints(minWidth: 44, minHeight: 44),
             prefixIcon: widget.prefixIcon != null
                 ? IconTheme(
-                    data: const IconThemeData(size: 20, color: AppColors.textSecondary),
+                    data: IconThemeData(size: 20, color: colors.outline),
                     child: widget.prefixIcon!,
                   )
                 : null,
             suffixIcon: widget.isPassword
                 ? IconButton(
-                    icon: Icon(_obscureText ? Icons.visibility_outlined : Icons.visibility_off_outlined, size: 20, color: AppColors.textSecondary),
+                    icon: Icon(_obscureText ? Icons.visibility_outlined : Icons.visibility_off_outlined, size: 20, color: colors.outline),
                     splashRadius: 20,
                     onPressed: () {
                       setState(() {
@@ -198,33 +203,33 @@ class _AppTextFieldState extends State<AppTextField> {
                   )
                 : widget.suffixIcon != null
                 ? IconTheme(
-                    data: const IconThemeData(size: 20, color: AppColors.textSecondary),
+                    data: IconThemeData(size: 20, color: colors.outline),
                     child: widget.suffixIcon!,
                   )
                 : null,
             border: OutlineInputBorder(
               borderRadius: effectiveRadius,
-              borderSide: const BorderSide(color: AppColors.border, width: 1.0),
+              borderSide: BorderSide(color: colors.outline, width: 1.0),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: effectiveRadius,
-              borderSide: const BorderSide(color: AppColors.border, width: 1.0),
+              borderSide: BorderSide(color: colors.outline, width: 1.0),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: effectiveRadius,
-              borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+              borderSide: BorderSide(color: colors.primary, width: 1.5),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: effectiveRadius,
-              borderSide: const BorderSide(color: AppColors.error, width: 1.0),
+              borderSide: BorderSide(color: palette.dangerForeground, width: 1.0),
             ),
             focusedErrorBorder: OutlineInputBorder(
               borderRadius: effectiveRadius,
-              borderSide: const BorderSide(color: AppColors.error, width: 1.5),
+              borderSide: BorderSide(color: palette.dangerForeground, width: 1.5),
             ),
             disabledBorder: OutlineInputBorder(
               borderRadius: effectiveRadius,
-              borderSide: const BorderSide(color: AppColors.border, width: 1.0),
+              borderSide: BorderSide(color: colors.outline, width: 1.0),
             ),
           ),
         ),

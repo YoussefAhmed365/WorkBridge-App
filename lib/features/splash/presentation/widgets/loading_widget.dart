@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:workbridge/core/theme/app_colors.dart';
 
 /// WorkBridge Standard Loading Progress Widget
 ///
@@ -18,6 +17,8 @@ class LoadingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+
     // Normalize progress value to 0.0 - 1.0 range if supplied as percentage
     final double? progressValue = loadingState != null
         ? (loadingState! > 1.0 ? (loadingState! / 100.0) : loadingState!).clamp(0.0, 1.0)
@@ -32,10 +33,10 @@ class LoadingWidget extends StatelessWidget {
           width: double.infinity,
           height: 4,
           child: progressValue == null
-              ? const LinearProgressIndicator(
-                  borderRadius: BorderRadius.all(Radius.circular(99)),
-                  backgroundColor: AppColors.primaryContainer,
-                  color: AppColors.primary,
+              ? LinearProgressIndicator(
+                  borderRadius: const BorderRadius.all(Radius.circular(99)),
+                  backgroundColor: colors.primaryContainer,
+                  color: colors.primary,
                 )
               : TweenAnimationBuilder<double>(
                   tween: Tween<double>(begin: 0.0, end: progressValue),
@@ -45,8 +46,8 @@ class LoadingWidget extends StatelessWidget {
                     return LinearProgressIndicator(
                       value: value,
                       borderRadius: const BorderRadius.all(Radius.circular(99)),
-                      backgroundColor: AppColors.primaryContainer,
-                      color: AppColors.primary,
+                      backgroundColor: colors.primaryContainer,
+                      color: colors.primary,
                     );
                   },
                 ),
@@ -58,9 +59,7 @@ class LoadingWidget extends StatelessWidget {
             child: Text(
               loadingLabel,
               key: ValueKey<String>(loadingLabel),
-              style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                    color: AppColors.textSecondary,
-                  ),
+              style: Theme.of(context).textTheme.labelMedium,
               textAlign: TextAlign.center,
             ),
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:workbridge/core/theme/app_colors.dart';
+import 'package:workbridge/core/theme/theme_extension.dart';
 import 'package:workbridge/generated/l10n.dart';
 
 class SignupStepCounter extends StatelessWidget {
@@ -12,8 +13,10 @@ class SignupStepCounter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final colors = Theme.of(context).colorScheme;
+    final palette = Theme.of(context).extension<WorkBridgeThemeExtension>()!;
     final l10n = S.of(context);
-    final theme = Theme.of(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -22,12 +25,12 @@ class SignupStepCounter extends StatelessWidget {
           children: [
             Container(
               padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 8),
-              decoration: BoxDecoration(color: AppColors.primaryContainer, borderRadius: BorderRadius.circular(100)),
-              child: Text(l10n.step(step + 1, _totalSteps), style: theme.textTheme.labelMedium?.copyWith(color: AppColors.primary)),
+              decoration: BoxDecoration(color: palette.activeFilterBackground, borderRadius: BorderRadius.circular(100)),
+              child: Text(l10n.step(step + 1, _totalSteps), style: textTheme.labelMedium?.copyWith(color: colors.onPrimaryContainer)),
             ),
             const SizedBox(width: 12),
             Expanded(
-              child: Text(stepName, style: theme.textTheme.labelMedium, overflow: TextOverflow.ellipsis),
+              child: Text(stepName, style: textTheme.labelLarge, overflow: TextOverflow.ellipsis),
             ),
           ],
         ),
@@ -41,7 +44,7 @@ class SignupStepCounter extends StatelessWidget {
                 duration: const Duration(milliseconds: 250),
                 height: 6,
                 margin: EdgeInsets.only(right: index < _totalSteps - 1 ? 8 : 0),
-                decoration: BoxDecoration(color: isActive ? AppColors.primary : AppColors.primaryContainer, borderRadius: BorderRadius.circular(100)),
+                decoration: BoxDecoration(color: isActive ? colors.primary : palette.tagBackground, borderRadius: BorderRadius.circular(100)),
               ),
             );
           }),

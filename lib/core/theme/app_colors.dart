@@ -14,8 +14,8 @@ abstract final class AppColors {
 
   // Light theme.
   static const Color lightBackground = Color(0xFFF8FAFC);
-  static const Color lightSurface = Color(0xFFFFFFFF);
-  static const Color lightSurfaceLow = Color(0xFFFFFFFF);
+  static const Color lightSurface = Colors.white;
+  static const Color lightSurfaceLow = Colors.white;
   static const Color lightSurfaceContainer = Color(0xFFF8FAFC);
   static const Color lightSurfaceHigh = Color(0xFFF1F5F9);
   static const Color lightSurfaceHighest = Color(0xFFE2E8F0);
