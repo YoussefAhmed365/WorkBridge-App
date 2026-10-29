@@ -14,5 +14,5 @@ class JobEntity extends Equatable {
   const JobEntity({required this.id, required this.title, required this.companyName, required this.companyLogo, required this.location, required this.jobType, required this.salary, required this.matchPercentage, required this.tags});
 
   @override
-  List<Object?> get props => [id, title, companyName, location, jobType, salary, matchPercentage];
+  List<Object?> get props => [id, title, companyName, companyLogo, location, jobType, salary, matchPercentage, tags];
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:workbridge/core/theme/theme_extension.dart';
+import 'package:workbridge/core/utils/validators.dart';
 import 'package:workbridge/core/widgets/app_text_field.dart';
 import 'package:workbridge/generated/l10n.dart';
 
@@ -39,19 +40,14 @@ class _AccountCredentialsStepState extends State<AccountCredentialsStep> {
   void _validatePasswordRules() {
     final text = _passwordController.text;
     setState(() {
-      _hasMinLength = text.length >= 8;
-      _hasNumberOrSymbol = RegExp(r'[0-9!@#$%^&*(),.?":{}|<>]').hasMatch(text);
-      _hasUpperAndLower = RegExp(r'(?=.*[a-z])(?=.*[A-Z])').hasMatch(text);
+      _hasMinLength = Validators.hasMinLength(text);
+      _hasNumberOrSymbol = Validators.hasNumberOrSymbol(text);
+      _hasUpperAndLower = Validators.hasUpperAndLower(text);
     });
   }
 
   int get _strengthScore {
-    int score = 0;
-    if (_passwordController.text.isNotEmpty) score++;
-    if (_hasMinLength) score++;
-    if (_hasNumberOrSymbol) score++;
-    if (_hasUpperAndLower) score++;
-    return score;
+    return Validators.calculatePasswordStrength(_passwordController.text);
   }
 
   @override
@@ -64,37 +60,15 @@ class _AccountCredentialsStepState extends State<AccountCredentialsStep> {
   }
 
   String? _validatePhoneOrEmail(String? value, S l10n) {
-    if (value == null || value.trim().isEmpty) {
-      return l10n.errorFieldIsEmpty;
-    }
-    final trimmed = value.trim();
-    final emailRegex = RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$');
-    final phoneRegex = RegExp(r'^(01[0125]\d{8}|\+?201[0125]\d{8})$');
-
-    if (!emailRegex.hasMatch(trimmed) && !phoneRegex.hasMatch(trimmed)) {
-      return l10n.errorPhoneOrEmailField;
-    }
-    return null;
+    return Validators.validatePhoneOrEmail(value, l10n);
   }
 
   String? _validatePassword(String? value, S l10n) {
-    if (value == null || value.isEmpty) {
-      return l10n.errorFieldIsEmpty;
-    }
-    if (value.length < 6) {
-      return l10n.errorConfirmPasswordField;
-    }
-    return null;
+    return Validators.validatePassword(value, l10n);
   }
 
   String? _validateConfirmPassword(String? value, S l10n) {
-    if (value == null || value.isEmpty) {
-      return l10n.errorFieldIsEmpty;
-    }
-    if (value != _passwordController.text) {
-      return l10n.errorConfirmPasswordField;
-    }
-    return null;
+    return Validators.validateConfirmPassword(value, _passwordController.text, l10n);
   }
 
   @override
